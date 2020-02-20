@@ -3,4 +3,59 @@
     background-color: #222;
 }
 
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.box{
+    background-color: #fff;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 60vw;
+    height: 80vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.scroll {
+    position: relative;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.wide_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+}
+
+.list_item{
+    display: block;
+    text-decoration: none;
+    padding: 10px;
+    border-bottom: solid #0002 1px;
+    cursor: pointer;
+}
+
+.list_item:hover{
+    background-color: #0001;
+}
+
+.list_item .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #222;
+}
+
+.list_item .description {
+    color: #666;
+}
+
 

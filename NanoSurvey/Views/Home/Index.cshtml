@@ -1,8 +1,37 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Анкеты";
 }
 
-<div>
-    <h1>Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<div id="container" class="scroll"></div>
+
+<script>
+    let dom = document.querySelector("#container");
+    SurveysAPI.getList(50, 0, (responce) => {
+        console.log(responce);
+
+        if (responce.length > 0) {
+            for (let i = 0; i < responce.length; i++) {
+                dom.appendChild(ListItem(responce[i]));
+            }
+        }
+        else {
+            let text = $$.create(dom, "div", "wide_text");
+            text.innerText = "Анкет нет";
+        }
+    });
+
+    function ListItem(model)
+    {
+        let root = document.createElement("a");
+        root.classList = "list_item";
+        root.href = "/" + model.id;
+
+        let title = $$.create(root, "div", "title");
+        title.innerText = "#" + model.id + " " + model.title;
+
+        let description = $$.create(root, "div", "description");
+        description.innerText = model.description;
+
+        return root;
+    }
+</script>

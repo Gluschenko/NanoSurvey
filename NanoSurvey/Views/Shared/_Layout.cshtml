@@ -3,17 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - NanoSurvey</title>
+    <title>@ViewData["Title"]</title>
 
-    <script href="~js/ajax.js" type="text/javascript" asp-append-version="true"></script>
-    <script href="~js/app.js" type="text/javascript" asp-append-version="true"></script>
-    <link rel="stylesheet" href="~css/style.css" asp-append-version="true"/>
+    <link href="~/css/style.css" rel="stylesheet" asp-append-version="true" />
+    <script src="~/js/ajax.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/app.js" type="text/javascript" asp-append-version="true"></script>
 </head>
 <body>
     <div class="container">
-        <main role="main" class="pb-3">
+        <div class="box">
             @RenderBody()
-        </main>
+        </div>
     </div>
 </body>
 </html>
