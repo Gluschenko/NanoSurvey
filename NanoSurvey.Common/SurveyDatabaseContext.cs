@@ -1,30 +1,31 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NanoSurvey.Common.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace NanoSurvey.Common
 {
     public class SurveyDatabaseContext : DbContext
     {
-        public DbSet<Survey> Surveys;
-        public DbSet<Question> Questions;
-        public DbSet<Answer> Answers;
-        public DbSet<Result> Results;
-        public DbSet<Interview> Interviews;
+        public DbSet<Survey> Surveys { get; set; }
+        public DbSet<Interview> Interviews { get; set; }
+        
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Result> Results { get; set; }
+        public DbSet<ResultItem> ResultsPool { get; set; }
 
         public SurveyDatabaseContext(DbContextOptions<SurveyDatabaseContext> options) : base(options)
         {
-            Database.EnsureCreated();
-        }
+            if (!Database.CanConnect())
+                Console.WriteLine("Unable to connect!");
 
-        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-        }*/
+        }
     }
 }

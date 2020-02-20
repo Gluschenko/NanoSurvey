@@ -16,11 +16,25 @@ namespace NanoSurvey
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+        public static IHostBuilder CreateHostBuilder(string[] args) 
+        {
+            var builder = Host.CreateDefaultBuilder(args);
+
+            builder.ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder
+                .ConfigureLogging((hostingContext, logging) =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    // Requires Microsoft.Extensions.Logging
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                    logging.AddDebug();
+                    logging.AddEventSourceLogger();
+                })
+                .UseStartup<Startup>();
+            });
+
+            return builder;
+        }
     }
 }

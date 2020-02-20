@@ -5,17 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NanoSurvey.Common;
+using NanoSurvey.Common.Data;
 using NanoSurvey.Models;
 
 namespace NanoSurvey.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        readonly ILogger<HomeController> logger;
+        readonly SurveyDatabaseContext database;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SurveyDatabaseContext database)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.database = database;
         }
 
         public IActionResult Index()
@@ -23,9 +27,15 @@ namespace NanoSurvey.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [Route("{id}")]
+        public IActionResult Poll(int id)
         {
-            return View();
+            var survey = database.Surveys.GetByID(id);
+
+            if (survey != null)
+                return View(survey);
+
+            return NotFound();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

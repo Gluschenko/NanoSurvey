@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NanoSurvey.Common.Entities
 {
     public class Result
     {
+        [Key]
         public int ID { get; set; }
         public int SurveyID { get; set; }
         public int InterviewID { get; set; }
-        public string Data { get; set; }
     }
 }

@@ -4,12 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NanoSurvey.Common.Entities
 {
-    public class Question
+    public class ResultItem
     {
+        // ТУТ КОМПОЗИТНЫЙ КЛЮЧ
         [Key]
-        public int ID { get; set; }
-        public int SurveyID { get; set; }
-        public string Text { get; set; }
-        public bool IsMultipleAnswer { get; set; }
+        public int ResultID { get; set; } 
+        public int Value { get; set; }
     }
 }
