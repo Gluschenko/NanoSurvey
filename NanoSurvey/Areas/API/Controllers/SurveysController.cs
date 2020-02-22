@@ -45,5 +45,29 @@ namespace NanoSurvey.Areas.API.Controllers
             var result = database.Surveys.GetByID(id);
             return result != null ? JsonResponce(result) : JsonError("This object is not available");
         }
+
+        [HttpPost]
+        public IActionResult GetQuestion(int id, int previous) 
+        {
+            if (id <= 0)
+                return JsonError("ID must be a positive number");
+
+            var question = database.Questions.Get(id, previous);
+            /*if (question != null)
+            {
+                question.Answers = database.Answers.Get(question.ID);
+            }*/
+
+            return question != null ? JsonResponce(question) : JsonError("No more questions");
+        }
+
+        [HttpPost]
+        public IActionResult SaveResult(int interviewID, int questionID, int value)
+        {
+            var result = database.Results.Save(interviewID, questionID, value);
+            database.SaveChanges();
+
+            return JsonResponce(result != null ? 1 : 0);
+        }
     }
 }

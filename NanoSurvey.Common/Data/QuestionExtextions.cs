@@ -6,10 +6,10 @@ namespace NanoSurvey.Common.Data
 {
     public static class QuestionExtextions
     {
-        public static Question GetQuestion(this DbSet<Question> questions, int surveyID, int start = 0)
+        public static Question Get(this DbSet<Question> questions, int surveyID, int previous = 0)
         {
-            var items = from q in questions where q.SurveyID == surveyID && q.ID >= start select q;
-            return items.FirstOrDefault();
+            var items = (from q in questions where q.SurveyID == surveyID && q.ID > previous select q).Take(1);
+            return items.Include(q => q.Answers).FirstOrDefault();
         }
     }
 }

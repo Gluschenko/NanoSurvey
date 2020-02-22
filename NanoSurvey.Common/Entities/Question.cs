@@ -11,5 +11,7 @@ namespace NanoSurvey.Common.Entities
         public int SurveyID { get; set; }
         public string Text { get; set; }
         public bool IsMultipleAnswer { get; set; }
+
+        public virtual List<Answer> Answers { get; set; }
     }
 }

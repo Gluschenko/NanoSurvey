@@ -7,18 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NanoSurvey.Common;
 using NanoSurvey.Common.Data;
-using NanoSurvey.Models;
 
 namespace NanoSurvey.Controllers
 {
     public class HomeController : Controller
     {
-        readonly ILogger<HomeController> logger;
         readonly SurveyDatabaseContext database;
 
-        public HomeController(ILogger<HomeController> logger, SurveyDatabaseContext database)
+        public HomeController(SurveyDatabaseContext database)
         {
-            this.logger = logger;
             this.database = database;
         }
 
@@ -27,7 +24,7 @@ namespace NanoSurvey.Controllers
             return View();
         }
 
-        [Route("{id}")]
+        [Route("poll{id}")]
         public IActionResult Poll(int id)
         {
             var survey = database.Surveys.GetByID(id);
@@ -38,10 +35,13 @@ namespace NanoSurvey.Controllers
             return NotFound();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        // Заполняет базу данных тестовыми данными (чем больше запросов, тем толще база)
+        [Route("fill")]
+        public IActionResult Fill()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            DatabaseLitter.Fill(database, 50);
+
+            return Content("OK");
         }
     }
 }

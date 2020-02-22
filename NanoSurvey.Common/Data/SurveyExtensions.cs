@@ -18,11 +18,11 @@ namespace NanoSurvey.Common.Data
 
         /// <summary>
         /// Возвращает массив объектов Syrvey, начиная с ID = start.
-        /// SQL: SELECT TOP(@count) * [Surveys] WHERE [ID] >= @start ORDER BY [ID] ASC 
+        /// SQL: SELECT TOP(@count) * [Surveys] WHERE [ID] > @start ORDER BY [ID] ASC 
         /// </summary>
         public static Survey[] GetList(this DbSet<Survey> surveys, int count, int start = 0)
         {
-            var query = from s in surveys where s.ID >= start orderby s.ID ascending select s;
+            var query = from s in surveys where s.ID > start orderby s.ID ascending select s;
             return query.Take(count).ToArray();
         }
     }

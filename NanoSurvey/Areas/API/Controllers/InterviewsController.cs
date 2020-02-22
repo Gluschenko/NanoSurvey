@@ -30,10 +30,13 @@ namespace NanoSurvey.Areas.API.Controllers
             if (!ModelState.IsValid)
                 return JsonError(ModelState);
 
-            database.Interviews.Create((Interview)model);
+            var interview = (Interview)model;
+            interview.Date = DateTime.Now;
+
+            interview = database.Interviews.Create(interview);
             database.SaveChanges();
 
-            return JsonResponce(model);
+            return JsonResponce(interview.ID);
         }
     }
 }
