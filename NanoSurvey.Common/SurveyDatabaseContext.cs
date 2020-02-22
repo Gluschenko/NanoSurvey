@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NanoSurvey.Common.Entities;
-using Microsoft.Extensions.Logging;
 
 namespace NanoSurvey.Common
 {
@@ -13,7 +12,6 @@ namespace NanoSurvey.Common
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Result> Results { get; set; }
-        public DbSet<ResultItem> ResultsPool { get; set; }
 
         public SurveyDatabaseContext(DbContextOptions<SurveyDatabaseContext> options) : base(options)
         {
@@ -26,6 +24,9 @@ namespace NanoSurvey.Common
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Табличка Results имеет композитный ключ
+            modelBuilder.Entity<Result>().HasKey(e => new { e.InterviewID, e.QuestionID });
         }
     }
 }

@@ -6,9 +6,9 @@ namespace NanoSurvey.Common.Entities
 {
     public class Result
     {
-        [Key]
-        public int ID { get; set; }
-        public int SurveyID { get; set; }
+        //public int ID { get; set; }
         public int InterviewID { get; set; }
+        public int QuestionID { get; set; }
+        public int Value { get; set; }
     }
 }
