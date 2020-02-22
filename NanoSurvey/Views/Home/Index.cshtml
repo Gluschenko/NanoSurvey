@@ -1,17 +1,18 @@
 ﻿@{
-    ViewData["Title"] = "Анкеты";
+    ViewData["Title"] = "NanoSurvey | Анкеты";
 }
 
-<div id="container" class="scroll"></div>
+<div class="box_title">Анкеты</div>
+<div id="container" class="scroll" style="height: calc(100% - 50px);"></div>
 
 <script>
     let dom = document.querySelector("#container");
-    SurveysAPI.getList(50, 0, (responce) => {
+    API.Surveys.getList(50, 0, (responce) => {
         console.log(responce);
 
         if (responce.length > 0) {
             for (let i = 0; i < responce.length; i++) {
-                dom.appendChild(ListItem(responce[i]));
+                dom.appendChild(createListItem(responce[i]));
             }
         }
         else {
@@ -20,11 +21,11 @@
         }
     });
 
-    function ListItem(model)
+    function createListItem(model)
     {
         let root = document.createElement("a");
         root.classList = "list_item";
-        root.href = "/" + model.id;
+        root.href = "/poll" + model.id;
 
         let title = $$.create(root, "div", "title");
         title.innerText = "#" + model.id + " " + model.title;

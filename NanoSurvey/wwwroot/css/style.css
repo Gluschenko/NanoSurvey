@@ -4,6 +4,7 @@
 }
 
 * {
+    box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
 }
@@ -21,6 +22,14 @@
     transform: translate(-50%, -50%);
 }
 
+.box_title {
+    font-size: 19px;
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    border-bottom: solid #0002 1px;
+}
+
 .scroll {
     position: relative;
     overflow-y: auto;
@@ -33,6 +42,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 30px;
+    white-space: nowrap;
 }
 
 .list_item{
@@ -56,6 +66,72 @@
 
 .list_item .description {
     color: #666;
+}
+
+.panel{
+    padding: 10px;
+    color: #fff;
+    background-color: #293;
+    border-radius: 5px;
+}
+
+form {
+    display: block;
+    padding: 10px;
+}
+
+form input {
+    display: block;
+    width: 100%;
+    line-height: 30px;
+    border: solid #222 1px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    outline: none;
+}
+
+input[type=button] {
+    background-color: #f20;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type=button]:hover {
+    background-color: #f00;
+}
+
+.label{
+    display: flex;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.label input{
+    transform: scale(2);
+    margin-right: 15px;
+}
+
+.button {
+    margin: 10px;
+    display: block;
+    line-height: 30px;
+    border: solid #222 1px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    outline: none;
+    background-color: #f20;
+    color: #fff;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #f00;
 }
 
 

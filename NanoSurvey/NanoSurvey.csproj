@@ -25,4 +25,8 @@
     <ProjectReference Include="..\NanoSurvey.Common\NanoSurvey.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

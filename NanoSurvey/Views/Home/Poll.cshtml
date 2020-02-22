@@ -4,6 +4,144 @@
     ViewData["Title"] = $"#{Model.ID} {Model.Title}";
 }
 
-<div>
-    
+    <div class="box_title">#@Model.ID @Model.Title</div>
+<div id="container" class="scroll" style="height: calc(100% - 50px);">
+    <form>
+        <div class="panel">@Model.Description</div>
+        <div style="height: 20px;"></div>
+        <div>Фамилия:</div>
+        <input name="lastName" placeholder="Иванов" value="" />
+        <div>Имя:</div>
+        <input name="firstName" placeholder="Иван" value="" />
+        <div>Отчество:</div>
+        <input name="middleName" placeholder="Иванович" value="" />
+        <div>Электро-почта:</div>
+        <input name="email" placeholder="me@gluschenko.net" type="email" value="" />
+        <div style="height: 20px;"></div>
+        <input type="button" value="Начать" onclick="saveInterview($$.select('form'))" />
+    </form>
+
+    <script>
+        let currentInterviewID = 0;
+        let currentSurveyID = @Model.ID;
+        let currentQuestionID = 0;
+
+        function saveInterview(form)
+        {
+            API.Interviews.save(
+                currentSurveyID,
+                form.firstName.value,
+                form.lastName.value,
+                form.middleName.value,
+                form.email.value,
+                (response) => startSurvey(response));
+        }
+
+        function startSurvey(id)
+        {
+            currentInterviewID = id;
+            console.log("interviewID: " + id);
+            //
+            let root = $$.select("#container");
+            $$.clear(root);
+            //
+            nextQuestion(root);
+        }
+
+        function nextQuestion(root)
+        {
+            $$.clear(root);
+            API.Surveys.getQuestion(currentSurveyID, currentQuestionID,
+                (response) => {
+                    console.log(response);
+                    currentQuestionID = response.id;
+                    drawQuestion(response, root);
+                },
+                (error) => {
+                    finishSurvey(root);
+                });
+        }
+
+        function drawQuestion(response, root) {
+            let is_multi = response.isMultipleAnswer;
+
+            let text = $$.create(root, "div");
+            text.innerText = response.text;
+            text.classList = "label";
+
+            let answersRoot = $$.create(root, "div");
+
+            let multi_result = 0;
+
+            for (let i in response.answers)
+            {
+                let answer = response.answers[i];
+
+                if (!is_multi) {
+                    let label = $$.create(answersRoot, "div");
+                    label.classList = "label";
+
+                    let input = $$.create(label, "input");
+                    input.type = "radio";
+
+                    let _label = $$.create(label, "span");
+                    _label.innerText = answer.text;
+
+                    input.onchange = () => {
+                        API.Surveys.saveResult(currentInterviewID, currentQuestionID, answer.id, () => {
+                            nextQuestion(root);
+                        });
+                    };
+                }
+                else {
+                    let label = $$.create(answersRoot, "div");
+                    label.classList = "label";
+
+                    let input = $$.create(label, "input");
+                    input.type = "checkbox";
+
+                    let _label = $$.create(label, "span");
+                    _label.innerText = answer.text;
+
+                    let ii = i;
+                    input.onchange = () => {
+                        if (input.checked) {
+                            multi_result |= 1 << ii;
+                        }
+                        else {
+                            multi_result &= ~1 << ii;
+                        }
+                    };
+                }
+            }
+
+            if (is_multi) {
+                let button = $$.create(root, "div");
+                button.classList = "button";
+                button.innerText = "Далее";
+
+                button.onclick = () => {
+                    API.Surveys.saveResult(currentInterviewID, currentQuestionID, multi_result, () => {
+                        nextQuestion(root);
+                    });
+                };
+            }
+
+            if (!response.answers) {
+                let button = $$.create(root, "div");
+                button.classList = "button";
+                button.innerText = "Пропустить";
+
+                button.onclick = () => {
+                    nextQuestion(root);
+                };
+            }
+        }
+
+        function finishSurvey(root)
+        {
+            let text = $$.create(root, "div", "wide_text");
+            text.innerText = "Анкета заполнена 😛";
+        }
+    </script>
 </div>
