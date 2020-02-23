@@ -22,8 +22,8 @@ namespace NanoSurvey.Common.Data
         /// </summary>
         public static Survey[] GetList(this DbSet<Survey> surveys, int count, int start = 0)
         {
-            var query = from s in surveys where s.ID > start orderby s.ID ascending select s;
-            return query.Take(count).ToArray();
+            var query = (from s in surveys where s.ID > start orderby s.ID ascending select s).Take(count);
+            return query.ToArray();
         }
     }
 }

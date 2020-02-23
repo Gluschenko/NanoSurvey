@@ -7,6 +7,7 @@ using NanoSurvey.Common.Data.Validation;
 
 namespace NanoSurvey.Common
 {
+    // Забивает базу рандомным мусором
     public static class DatabaseLitter
     {
         readonly static string[] randomWords = new string[] {
@@ -32,7 +33,8 @@ namespace NanoSurvey.Common
                 database.Surveys.Add(survey);
                 database.SaveChanges();
                 //
-                for (int j = 0; j < questionsCount; j++) 
+                var qList = new List<Question>();
+                for (int j = 0; j < questionsCount; j++)
                 {
                     var quest = new Question
                     {
@@ -41,20 +43,22 @@ namespace NanoSurvey.Common
                         IsMultipleAnswer = i % 2 == 0
                     };
                     database.Questions.Add(quest);
-                    database.SaveChanges();
-                    //
+                    qList.Add(quest);
+                }
+                database.SaveChanges();
+
+                foreach (var q in qList) 
+                {
                     for (int k = 0; k < answersCount; k++)
                     {
                         var answer = new Answer
                         {
-                            QuestionID = quest.ID,
+                            QuestionID = q.ID,
                             Text = GenerateLine(randomWords, random, true),
                         };
                         database.Answers.Add(answer);
                     }
-                    database.SaveChanges();
                 }
-
                 database.SaveChanges();
             }
         }

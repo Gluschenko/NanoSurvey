@@ -14,6 +14,6 @@
         public const int MinUserNameLength = 5;
         public const int MaxUserNameLength = 24;
 
-        public const int MaxSurveyCountPerRequest = 50;
+        public const int MaxSurveyCountPerRequest = 100;
     }
 }

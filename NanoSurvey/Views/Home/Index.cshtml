@@ -6,20 +6,33 @@
 <div id="container" class="scroll" style="height: calc(100% - 50px);"></div>
 
 <script>
+    let offset = 0;
+    let step = 100;
     let dom = document.querySelector("#container");
-    API.Surveys.getList(50, 0, (responce) => {
+    dom.addEventListener("scroll", (e) => {
+        if (dom.offsetHeight + dom.scrollTop >= dom.scrollHeight) {
+            //offset += step;
+            API.Surveys.getList(step, offset, onResponce);
+        }
+    });
+
+    API.Surveys.getList(step, offset, onResponce);
+
+    function onResponce(responce){
         console.log(responce);
 
         if (responce.length > 0) {
             for (let i = 0; i < responce.length; i++) {
+                offset = responce[i].id;
                 dom.appendChild(createListItem(responce[i]));
             }
         }
-        else {
+        else
+        if(offset == 0){
             let text = $$.create(dom, "div", "wide_text");
             text.innerText = "Анкет нет";
         }
-    });
+    }
 
     function createListItem(model)
     {

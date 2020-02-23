@@ -25,8 +25,8 @@ const API = {
 };
 
 API.Surveys = {
-    getList: function (count, offset, response) {
-        API.CallMethod("surveys/getList", { count: count, offset: offset }, function (data) {
+    getList: function (count, start, response) {
+        API.CallMethod("surveys/getList", { count: count, start: start }, function (data) {
             if (data.response) {
                 response(data.response);
             }

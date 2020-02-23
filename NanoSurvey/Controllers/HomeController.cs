@@ -36,10 +36,10 @@ namespace NanoSurvey.Controllers
         }
 
         // Заполняет базу данных тестовыми данными (чем больше запросов, тем толще база)
-        [Route("fill")]
-        public IActionResult Fill()
+        [Route("fill/{iterations?}")]
+        public IActionResult Fill(int iterations = 50)
         {
-            DatabaseLitter.Fill(database, 50);
+            DatabaseLitter.Fill(database, iterations);
 
             return Content("OK");
         }
