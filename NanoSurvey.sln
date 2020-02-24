@@ -9,7 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NanoSurvey.Common", "NanoSu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{975B5F3E-78C6-42BD-B14F-B7CB9F870177}"
 	ProjectSection(SolutionItems) = preProject
-		img\diagram.png = img\diagram.png
 		README.md = README.md
 	EndProjectSection
 EndProject

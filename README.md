@@ -5,15 +5,15 @@ NanoSurvey — сервис, предоставляющий
 
 #### Структура
 
-`NanoSurvey` — приложение ASP.NET Core (хост: localhost:5024).
+`NanoSurvey` — приложение ASP.NET Core (по умолчанию: localhost:5024).
 
 `NanoSurvey.Common` — библиотека .NET Standard, предоставляющая 
 контекст, расширения коллекций и схемы сущностей базы данных.
 
 #### Требования
 
-* ASP.NET Core `3.1.1`
-* MS SQL Server `>= 18.0`
+* ASP.NET Core `>= 3.1.1`
+* MS SQL Server `>= 2019`
 * Microsoft.EntityFrameworkCore `3.1.2`
 * Microsoft.EntityFrameworkCore.SqlServer `3.1.2`
 * Microsoft.EntityFrameworkCore.Tools `3.1.2`
@@ -23,7 +23,7 @@ NanoSurvey — сервис, предоставляющий
 Методы  API принимают запросы строго определенной структуры и строго заданного формата данных. 
 В свою очередь, API предоставляет однозначный и строго формализованный ответ.
 
-Формат запроса к API: [POST] localhost:5024/api/[section]/[method] 
+Формат запроса к API: [POST] /api/[section]/[method] 
 
 *Ответ об успешном выполнении (JSON):*
 
@@ -46,7 +46,7 @@ NanoSurvey — сервис, предоставляющий
         }
     }
 
-*При наличии нескольких сообщений `error_msg` будет возвращен в виде массива*
+**При наличии нескольких сообщений `error_msg` будет возвращен в виде массива*
 
 ## API Methods
 
@@ -96,9 +96,26 @@ NanoSurvey — сервис, предоставляющий
 * `middleName` `string` — отчество, либо вторая фамилия
 * `email` `string` — почта
 
+**Имена и адрес почты водвергаются проверке формата и органичены по длине*
 
 ## Database
 
+Структура БД: data/database_scheme.sql
+
+Данные для БД: data/database_data_only.sql (67 MB)
+
+Также БД можно автоматически забить рандомными данными: http://localhost:5024/fill/[количество_анкет]
+
 ![diagram](img/diagram.png)
+
+## Скрины
+
+Для упрощения тестирования руками был реализован фронт на коленке.
+
+![](img/1.png)
+![](img/2.png)
+![](img/3.png)
+![](img/4.png)
+![](img/5.png)
 
 
